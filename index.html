@@ -1,1 +1,733 @@
-hola
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tienda IMPORTED - Catálogo</title>
+    
+    <!-- Meta tags para SEO y redes sociales -->
+    <meta name="description" content="tienda IMPORTED - Productos tecnológicos importados de alta calidad. Smartphones Samsung, iPhone, perfumes de lujo, audio JBL y más.">
+    <meta name="keywords" content="tienda IMPORTED, productos importados, smartphones, iPhone, Samsung, perfumes, JBL, tecnología">
+    <meta name="author" content="tienda IMPORTED">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ultranube.com/tienda/">
+    <meta property="og:title" content="tienda IMPORTED - Productos Tecnológicos Importados">
+    <meta property="og:description" content="Descubre nuestra selección de productos tecnológicos importados: Smartphones Samsung y iPhone, perfumes de lujo, audio JBL y dispositivos de streaming.">
+    <meta property="og:image" content="https://ultranube.com/tienda/logo1.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="tienda IMPORTED">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ultranube.com/tienda/">
+    <meta property="twitter:title" content="tienda IMPORTED - Productos Tecnológicos Importados">
+    <meta property="twitter:description" content="Descubre nuestra selección de productos tecnológicos importados: Smartphones Samsung y iPhone, perfumes de lujo, audio JBL y dispositivos de streaming.">
+    <meta property="twitter:image" content="https://ultranube.com/tienda/logo1.png">
+    
+    <!-- WhatsApp -->
+    <meta property="og:image:alt" content="tienda IMPORTED - Logo de la tienda de productos importados">
+    
+    <!-- Reemplazando Tailwind CDN y estilos inline con archivo CSS externo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --tienda-red: #dc2626;
+            --tienda-black: #1f2937;
+        }
+
+        .tienda-red { color: var(--tienda-red); }
+        .tienda-black { color: var(--tienda-black); }
+        .bg-tienda-red { background-color: var(--tienda-red); }
+        .border-tienda-red { border-color: var(--tienda-red); }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .gradient-red {
+            background: linear-gradient(135deg, var(--tienda-red) 0%, #b91c1c 100%);
+        }
+
+        .gradient-black {
+            background: linear-gradient(135deg, var(--tienda-black) 0%, #111827 100%);
+        }
+
+        .gradient-green {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        }
+
+        .logo-container {
+            height: 60px;
+            width: auto;
+            max-width: 200px;
+        }
+
+        .header-shadow {
+            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.1);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-hover {
+            transition: all 0.3s ease;
+        }
+
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .price-tag {
+            color: var(--tienda-red);
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .product-badge {
+            background: var(--tienda-red);
+            color: white;
+            font-weight: bold;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mobile-bottom-padding {
+            padding-bottom: 100px;
+        }
+
+        @media (max-width: 1024px) {
+            .mobile-bottom-padding {
+                padding-bottom: 200px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .mobile-bottom-padding {
+                padding-bottom: 220px;
+            }
+        }
+
+        .carrito-mobile {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 100vw;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .carrito-mobile.show {
+            transform: translateX(0);
+        }
+
+        .carrito-content-mobile {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-height: 80vh;
+            overflow-y: auto;
+            border-radius: 20px 20px 0 0;
+        }
+
+        @media (min-width: 1024px) {
+            .carrito-mobile {
+                position: static;
+                width: 24rem;
+                height: auto;
+                background: transparent;
+                transform: none;
+                transition: none;
+            }
+
+            .carrito-content-mobile {
+                position: static;
+                max-height: none;
+                border-radius: 12px;
+            }
+        }
+
+        .btn-flotante-mobile {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9998;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            z-index: 9997;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .whatsapp-float {
+                bottom: 100px;
+            }
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+        }
+
+        .contact-menu {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            z-index: 9996;
+            min-width: 250px;
+            transform: translateY(20px) scale(0.9);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .contact-menu {
+                bottom: 180px;
+            }
+        }
+
+        .contact-menu.show {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .contact-item:hover {
+            background: #f3f4f6;
+            transform: translateX(5px);
+        }
+
+        .contact-item i {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: white;
+        }
+
+        .categoria-btn {
+            background: #f3f4f6;
+            color: #6b7280;
+            border: 2px solid transparent;
+        }
+
+        .categoria-btn:hover {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .categoria-btn.active {
+            background: var(--tienda-red);
+            color: white;
+            border-color: var(--tienda-red);
+        }
+
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Header -->
+    <header class="bg-white header-shadow border-b-2 border-tienda-red sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <img src="https://ultranube.com/tienda/logo1.png" alt="tienda IMPORTED" class="logo-container">
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Botón de contacto en header -->
+                    <!--            <button onclick="toggleContactMenu()" class="hidden sm:flex gradient-green text-white px-4 py-2 rounded-lg font-bold btn-hover items-center space-x-2 shadow-lg">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>Contacto</span>
+                    </button> -->
+                    
+                    <button onclick="toggleCarrito()" class="gradient-red text-white px-4 sm:px-6 py-3 rounded-lg font-bold btn-hover flex items-center space-x-2 shadow-lg text-sm sm:text-base">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="hidden sm:inline">Carrito</span>
+                        <span class="sm:hidden">(<span id="cantidad-total-mobile">0</span>)</span>
+                        <span class="hidden sm:inline">(<span id="cantidad-total">0</span>)</span>
+                        <span class="bg-white tienda-red px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm ml-2 font-bold">$<span id="total-header">0</span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mobile-bottom-padding">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Productos -->
+            <div class="flex-1">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold tienda-black mb-4">Productos Importados</h2>
+                    <div class="w-24 h-1 bg-tienda-red mx-auto rounded-full"></div>
+                    <p class="text-gray-600 mt-4 text-base sm:text-lg">Tecnología de calidad internacional</p>
+                </div>
+                
+                <!-- Agregando filtros de categorías -->
+                <div class="mb-8">
+                    <div class="flex flex-wrap justify-center gap-2 sm:gap-4">
+                        <button onclick="filtrarPorCategoria('todos')" id="btn-todos" class="categoria-btn active px-4 py-2 rounded-full font-semibold text-sm transition-all">
+                            Todos
+                        </button>
+                        <button onclick="filtrarPorCategoria('Smartphone')" id="btn-Smartphone" class="categoria-btn px-4 py-2 rounded-full font-semibold text-sm transition-all">
+                            📱 Smartphones
+                        </button>
+                        <button onclick="filtrarPorCategoria('Perfume')" id="btn-Perfume" class="categoria-btn px-4 py-2 rounded-full font-semibold text-sm transition-all">
+                            🌸 Perfumes
+                        </button>
+                        <button onclick="filtrarPorCategoria('Audio')" id="btn-Audio" class="categoria-btn px-4 py-2 rounded-full font-semibold text-sm transition-all">
+                            🎵 Audio
+                        </button>
+                        <button onclick="filtrarPorCategoria('Streaming')" id="btn-Streaming" class="categoria-btn px-4 py-2 rounded-full font-semibold text-sm transition-all">
+                            📺 Streaming
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="productos-container" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8">
+                    <!-- Los productos se cargan aquí con JavaScript -->
+                </div>
+            </div>
+
+            <!-- Panel del Carrito -->
+            <div id="carrito-panel" class="lg:w-96 hidden carrito-mobile">
+                <div class="carrito-content-mobile bg-white rounded-xl shadow-2xl sticky top-24 border-2 border-tienda-red">
+                    <div class="gradient-red text-white p-6 rounded-t-xl lg:rounded-t-xl">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-xl font-bold flex items-center">
+                                <i class="fas fa-shopping-cart mr-2"></i>
+                                Carrito de Compras
+                            </h3>
+                            <!-- Mostrando botón cerrar en móvil también -->
+                            <button onclick="toggleCarrito()" class="text-white hover:bg-red-800 p-2 rounded-full transition-colors">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <div id="carrito-items" class="space-y-4 max-h-96 overflow-y-auto">
+                            <div id="carrito-vacio" class="text-center py-8 text-gray-500">
+                                <i class="fas fa-shopping-cart text-5xl mb-4 opacity-30 tienda-red"></i>
+                                <p class="font-medium">Tu carrito está vacío</p>
+                                <p class="text-sm mt-2">Agrega productos para comenzar</p>
+                            </div>
+                        </div>
+
+                        <div id="carrito-total" class="hidden border-t-2 border-tienda-red pt-6 mt-6">
+                            <div class="flex justify-between items-center text-xl font-bold mb-6 p-4 bg-gray-50 rounded-lg">
+                                <span class="tienda-black">Total:</span>
+                                <span class="tienda-red text-2xl">$<span id="total-carrito">0</span></span>
+                            </div>
+                            <button onclick="finalizarCompra()" class="w-full gradient-black text-white py-4 rounded-lg font-bold btn-hover flex items-center justify-center space-x-3 shadow-lg">
+                                <i class="fab fa-whatsapp text-xl"></i>
+                                <span>Finalizar por WhatsApp</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón flotante móvil para finalizar compra -->
+    <button id="btn-flotante" onclick="finalizarCompra()" class="btn-flotante-mobile lg:hidden gradient-black text-white py-4 px-6 rounded-xl font-bold btn-hover hidden items-center justify-center space-x-3">
+        <i class="fab fa-whatsapp text-xl"></i>
+        <span>Finalizar Pedido</span>
+        <span class="bg-white tienda-black px-2 py-1 rounded-full text-sm font-bold ml-2">$<span id="total-flotante">0</span></span>
+    </button>
+
+    <!-- Botón flotante de WhatsApp -->
+    <button onclick="toggleContactMenu()" class="whatsapp-float">
+        <i class="fab fa-whatsapp text-white text-2xl"></i>
+    </button>
+
+    <!-- Menú de contacto -->
+    <div id="contact-menu" class="contact-menu">
+        <h3 class="text-lg font-bold tienda-black mb-4 text-center">¡Contáctanos!</h3>
+        
+        <a href="https://wa.me/541159405750?text=Hola%20tienda%20IMPORTED,%20tengo%20una%20consulta" target="_blank" class="contact-item">
+            <i class="fab fa-whatsapp" style="background: #25D366;"></i>
+            <div>
+                <div class="font-semibold">WhatsApp 1</div>
+                <div class="text-sm text-gray-600">👦 Edgar</div>
+            </div>
+        </a>
+        
+        <a href="https://wa.me/541159405750?text=Hola%20tienda%20IMPORTED,%20tengo%20una%20consulta" target="_blank" class="contact-item">
+            <i class="fab fa-whatsapp" style="background: #25D366;"></i>
+            <div>
+                <div class="font-semibold">WhatsApp 2</div>
+                <div class="text-sm text-gray-600">👧 Guada</div>
+            </div>
+        </a>
+    </div>
+
+    <script>
+        const productos = [
+            {
+                tipo: 'Smartphone',
+                nombre: 'Samsung Galaxy A26 5G',
+                precio: 450000,
+                marca: 'Samsung',
+                imagen: 'imagenes/a26.jpeg',
+                descripcion: 'Pantalla vibrante y conectividad 5G'
+            },
+            {
+                tipo: 'Smartphone',
+                nombre: 'Samsung Galaxy A36 5G',
+                precio: 530000,
+                marca: 'Samsung',
+                imagen: 'imagenes/a36.jpeg',
+                descripcion: 'Potencia y elegancia con velocidad 5G'
+            },
+            {
+                tipo: 'Smartphone',
+                nombre: 'iPhone 14 128GB',
+                precio: 970000,
+                marca: 'Apple',
+                modelos: ['128GB','256GB'],
+                imagen: 'imagenes/iph.jpeg',
+                descripcion: 'Diseño premium y rendimiento excepcional'
+            },
+            
+            {
+                tipo: 'Perfume',
+                nombre: 'Al Haramain Amber Oud Gold Edition 120ml',
+                precio: 90000,
+                marca: 'Al Haramain',
+                imagen: 'imagenes/per2.jpeg',
+                descripcion: 'Fragancia oriental de lujo con notas doradas'
+            },
+            {
+                tipo: 'Perfume',
+                nombre: 'Bharara King 100ml',
+                precio: 110000,
+                marca: 'Bharara',
+                imagen: 'imagenes/per1.jpeg',
+                descripcion: 'Elegancia intensa en cada gota'
+            },
+            {
+                tipo: 'Audio',
+                nombre: 'JBL GO 4',
+                precio: 65000,
+                marca: 'JBL',
+                imagen: 'imagenes/jbl.jpeg',
+                descripcion: 'Altavoz portátil con gran potencia y estilo'
+            },
+            { 
+                tipo: 'Streaming',
+                nombre: 'Amazon Fire TV Stick 4K',
+                precio: 68000,
+                marca: 'Amazon',
+                imagen: 'imagenes/tvstick.jpg',
+                descripcion: 'Convierte tu TV en un Smart TV con streaming 4K y control por voz'
+            },
+        ];
+        
+        let carrito = [];
+        let carritoVisible = false;
+        let contactMenuVisible = false;
+        let categoriaActual = 'todos'; // Variable para filtro actual
+
+        function renderProductos() {
+            const container = document.getElementById('productos-container');
+            container.innerHTML = '';
+
+            const productosFiltrados = categoriaActual === 'todos' 
+                ? productos 
+                : productos.filter(producto => producto.tipo === categoriaActual);
+
+            productosFiltrados.forEach((producto, index) => {
+                const indexOriginal = productos.findIndex(p => p === producto);
+                
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl shadow-lg overflow-hidden card-hover animate-fade-in';
+                
+                let selectModelo = '';
+                if (producto.marca && producto.modelos) {
+                    selectModelo = `
+                        <div class="mb-4">
+                            <label class="block text-sm font-bold tienda-black mb-2">
+                                <i class="fas fa-mobile-alt mr-1 tienda-red"></i>
+                                Marca: ${producto.marca}
+                            </label>
+                            <select id="modelo-${indexOriginal}" class="w-full p-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-tienda-red transition-colors">
+                                <option value="">Selecciona el modelo</option>
+                                ${producto.modelos.map(modelo => `<option value="${modelo}">${modelo}</option>`).join('')}
+                            </select>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="aspect-[4/3] sm:aspect-square overflow-hidden bg-white relative">
+                        <img src="${producto.imagen}" alt="${producto.nombre}" class="w-full h-full object-contain hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-3 right-3">
+                            <span class="product-badge px-3 py-1 rounded-full text-xs">${producto.tipo}</span>
+                        </div>
+                    </div>
+                    <div class="p-3 sm:p-6">
+                        <h3 class="text-sm sm:text-lg font-bold tienda-black mb-2 leading-tight">${producto.nombre}</h3>
+                        <p class="text-gray-600 text-xs sm:text-sm mb-2 sm:mb-4 line-clamp-2">${producto.descripcion || ''}</p>
+                        <div class="price-tag mb-2 sm:mb-4 text-base sm:text-xl">$${producto.precio.toLocaleString()}</div>
+                        ${selectModelo}
+                        <button onclick="agregarAlCarrito(${indexOriginal})" class="w-full gradient-red text-white py-2 sm:py-3 rounded-lg font-bold btn-hover flex items-center justify-center space-x-2 shadow-lg text-xs sm:text-sm">
+                            <i class="fas fa-cart-plus"></i>
+                            <span>Agregar al Carrito</span>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function agregarAlCarrito(index) {
+            const producto = productos[index];
+            let nombreCompleto = producto.nombre;
+
+            if (producto.marca && producto.modelos) {
+                const select = document.getElementById(`modelo-${index}`);
+                const modelo = select.value;
+                if (!modelo) {
+                    mostrarNotificacion('⚠️ Por favor selecciona un modelo', 'warning');
+                    return;
+                }
+                nombreCompleto += ` (${producto.marca} - ${modelo})`;
+            }
+
+            const itemExistente = carrito.find(item => item.nombre === nombreCompleto);
+            if (itemExistente) {
+                itemExistente.cantidad++;
+                mostrarNotificacion('✅ Cantidad actualizada en el carrito', 'success');
+            } else {
+                carrito.push({ nombre: nombreCompleto, precio: producto.precio, cantidad: 1 });
+                mostrarNotificacion('🛒 Producto agregado al carrito', 'success');
+            }
+
+            actualizarCarrito();
+        }
+
+        function eliminarDelCarrito(index) {
+            carrito.splice(index, 1);
+            actualizarCarrito();
+            mostrarNotificacion('🗑️ Producto eliminado', 'info');
+        }
+
+        function cambiarCantidad(index, nuevaCantidad) {
+            if (nuevaCantidad <= 0) {
+                eliminarDelCarrito(index);
+            } else {
+                carrito[index].cantidad = nuevaCantidad;
+                actualizarCarrito();
+            }
+        }
+
+        function actualizarCarrito() {
+            const carritoItems = document.getElementById('carrito-items');
+            const carritoTotal = document.getElementById('carrito-total');
+            const btnFlotante = document.getElementById('btn-flotante');
+
+            if (carrito.length === 0) {
+                carritoItems.innerHTML = `
+                    <div id="carrito-vacio" class="text-center py-8 text-gray-500">
+                        <i class="fas fa-shopping-cart text-5xl mb-4 opacity-30 tienda-red"></i>
+                        <p class="font-medium">Tu carrito está vacío</p>
+                        <p class="text-sm mt-2">Agrega productos para comenzar</p>
+                    </div>
+                `;
+                carritoTotal.classList.add('hidden');
+                btnFlotante.classList.add('hidden');
+                btnFlotante.classList.remove('flex');
+            } else {
+                carritoItems.innerHTML = carrito.map((item, index) => `
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border-l-4 border-tienda-red">
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-bold tienda-black">${item.nombre}</p>
+                            <p class="text-sm tienda-red font-semibold">$${item.precio.toLocaleString()} c/u</p>
+                        </div>
+                        <div class="flex items-center space-x-2 ml-4">
+                            <button onclick="cambiarCantidad(${index}, ${item.cantidad - 1})" class="w-8 h-8 border-2 border-tienda-red tienda-red rounded-full flex items-center justify-center hover:bg-tienda-red hover:text-white transition-colors">
+                                <i class="fas fa-minus text-xs"></i>
+                            </button>
+                            <span class="w-10 text-center text-sm font-bold tienda-black bg-white px-2 py-1 rounded">${item.cantidad}</span>
+                            <button onclick="cambiarCantidad(${index}, ${item.cantidad + 1})" class="w-8 h-8 border-2 border-tienda-red tienda-red rounded-full flex items-center justify-center hover:bg-tienda-red hover:text-white transition-colors">
+                                <i class="fas fa-plus text-xs"></i>
+                            </button>
+                            <button onclick="eliminarDelCarrito(${index})" class="w-8 h-8 bg-tienda-red text-white rounded-full flex items-center justify-center hover:bg-red-700 transition-colors ml-2">
+                                <i class="fas fa-trash text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+                carritoTotal.classList.remove('hidden');
+                btnFlotante.classList.remove('hidden');
+                btnFlotante.classList.add('flex');
+            }
+
+            const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+            const cantidadTotal = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+
+            // Actualizar todos los elementos de total y cantidad
+            document.getElementById('total-carrito').textContent = total.toLocaleString();
+            document.getElementById('total-header').textContent = total.toLocaleString();
+            document.getElementById('total-flotante').textContent = total.toLocaleString();
+            document.getElementById('cantidad-total').textContent = cantidadTotal;
+            document.getElementById('cantidad-total-mobile').textContent = cantidadTotal;
+        }
+
+        function toggleCarrito() {
+            carritoVisible = !carritoVisible;
+            const panel = document.getElementById('carrito-panel');
+            if (carritoVisible) {
+                panel.classList.remove('hidden');
+                setTimeout(() => panel.classList.add('show'), 10);
+            } else {
+                panel.classList.remove('show');
+                setTimeout(() => panel.classList.add('hidden'), 300);
+            }
+        }
+
+        function toggleContactMenu() {
+            contactMenuVisible = !contactMenuVisible;
+            const menu = document.getElementById('contact-menu');
+            if (contactMenuVisible) {
+                menu.classList.add('show');
+            } else {
+                menu.classList.remove('show');
+            }
+        }
+
+        function finalizarCompra() {
+            if (carrito.length === 0) {
+                mostrarNotificacion('⚠️ Tu carrito está vacío', 'warning');
+                return;
+            }
+
+            const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+            const mensaje = encodeURIComponent(
+                '🛒 *PEDIDO tienda IMPORTED*\n\n' +
+                carrito.map(item => `• ${item.nombre}\n  Cantidad: ${item.cantidad}\n  Subtotal: $${(item.precio * item.cantidad).toLocaleString()}`).join('\n\n') +
+                `\n\n💰 *TOTAL: $${total.toLocaleString()}*\n\n¡Gracias por elegirnos! 🚀`
+            );
+            window.open(`https://wa.me/541159405750?text=${mensaje}`, '_blank');
+        }
+
+        function mostrarNotificacion(mensaje, tipo = 'info') {
+            const colores = {
+                success: 'bg-green-500',
+                warning: 'bg-yellow-500',
+                info: 'bg-blue-500',
+                error: 'bg-red-500'
+            };
+            
+            const notif = document.createElement('div');
+            notif.className = `fixed top-24 right-4 ${colores[tipo]} text-white px-4 sm:px-6 py-3 rounded-lg shadow-2xl z-50 animate-fade-in font-semibold text-sm sm:text-base`;
+            notif.textContent = mensaje;
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 4000);
+        }
+
+        function filtrarPorCategoria(categoria) {
+            categoriaActual = categoria;
+            
+            // Actualizar botones activos
+            document.querySelectorAll('.categoria-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`btn-${categoria}`).classList.add('active');
+            
+            // Re-renderizar productos
+            renderProductos();
+        }
+
+        // Cerrar menús al hacer clic fuera
+        document.addEventListener('click', function(event) {
+            const carritoPanel = document.getElementById('carrito-panel');
+            const contactMenu = document.getElementById('contact-menu');
+            const header = document.querySelector('header');
+            const whatsappBtn = document.querySelector('.whatsapp-float');
+            
+            // Cerrar carrito
+            if (carritoVisible && !carritoPanel.contains(event.target) && !header.contains(event.target)) {
+                toggleCarrito();
+            }
+            
+            // Cerrar menú de contacto
+            if (contactMenuVisible && !contactMenu.contains(event.target) && !whatsappBtn.contains(event.target)) {
+                toggleContactMenu();
+            }
+        });
+
+        // Inicializar
+        renderProductos();
+        actualizarCarrito();
+    </script>
+</body>
+ <footer class="site-footer" role="contentinfo">
+  <center>  <nav aria-label="Enlaces del pie de página">
+      <span>Sitio creado por </span>
+      <a href="https://ultranube.com" aria-label="Contacto">ultranube.com</a>
+    </nav></center> <br>
+  </footer>
+</html>
